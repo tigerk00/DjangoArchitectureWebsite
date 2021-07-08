@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">Наш Блог</h2>
+			</div>
+		</div>
+		<div id="fh5co-portfolio">
+			<div class="row nopadding">
+				<div>
+					<div class="row" style="margin: 0 auto;">
+						{% for blog in blogs %}
+						<div class="animate-box" style="padding: 10px; height: 250px;">
+							<a href="{% url 'blog:blog_detail' blog.url %}" class="col-md-3 portfolio-grid" style="height: 250px;">
+								<h3>{{ blog.title }}</h3>
+								<h4>Опубликовано: {{ blog.date|date:"d.m.Y, H:i:s" }}</h4>
+								<span>{{ blog.description|truncatewords:50|striptags|safe }}</span>
+							</a>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+
+

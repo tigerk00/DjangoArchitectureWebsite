@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ arch_obj.title }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">{{ style_obj.name }}</h2>
+			</div>
+		</div>
+		<div id="fh5co-portfolio">
+			<div class="row">
+				<div class="col-md-4 col-md-push-8">
+					<div class="detail">
+						<div class="animate-box">
+							<h2 style="color:#F95959">{{ style_obj.name }}</h2>
+							<p>{{style_obj.description|safe}}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-7 col-md-pull-4 image-content">
+					<div class="image-item  animate-box">
+						<img src="{{ style_obj.image.url }}" class="img-responsive" alt="{{ style_obj.name }}">
+						<p style="color: #F95959;">{{ style_obj.name }}</p>
+					</div>
+					<h2>Архитектура в даном стиле на сайте:</h2>
+					{% for arch in style_obj.architecture_set.all %}
+					<div class="image-item  animate-box">
+						<img src="{{ arch.main_photo.url }}" class="img-responsive" alt="{{ arch.title }}">
+						<p><a href="{% url 'arch_detail' arch.url %}">{{ arch.title }}</a></p>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load own_tags %}
+
+{% block title %}Известные архитекторы{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">Известные гении архитектурного искусства</h2>
+			</div>
+		</div>
+		<aside id="fh5co-hero">
+			<div class="flexslider">
+				<ul class="slides">
+				{% for architector in architectors|slice:':4' %}
+			   	<li style="background-image: url({{ architector.image.url }});">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-md-6 col-xs-8 col-md-offset-1 slider-text">
+				   				<div class="slider-text-inner">
+				   					<h1><a href="{% url 'architector_detail' architector.url %}">{{ architector.name }}</a></h1>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+				{% endfor %}
+			  	</ul>
+		  	</div>
+		</aside>
+		<div id="fh5co-portfolio">
+			<div class="row nopadding">
+				<div class="col-md-6 padding-right">
+					<div class="row">
+						{% for architector in architectors %}
+						{% if architector.pk|mod_two == 1 %}
+						<div class="col-md-12 animate-box">
+							<a href="{% url 'architector_detail' architector.url %}" class="portfolio-grid">
+								<img src="{{ architector.image.url }}" class="img-responsive" alt="{{ architector.name }}" width="550">
+								<div class="desc">
+									<h3>{{ architector.name|truncatewords:5 }}</h3>
+									<span>{{ architector.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-md-6 padding-left">
+					<div class="row">
+						{% for architector in architectors %}
+						{% if architector.pk|mod_two == 0 %}
+						<div class="col-md-12 animate-box">
+							<a href="{% url 'architector_detail' architector.url %}" class="portfolio-grid">
+								<img src="{{ architector.image.url }}" class="img-responsive" alt="{{ architector.name }}" width="550">
+								<div class="desc">
+									<h3>{{ architector.name }}</h3>
+									<span>{{ architector.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- END container -->
+{% endblock %}
+
+
+
+

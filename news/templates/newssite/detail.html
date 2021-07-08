@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ news_obj.title|upper }}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div id="fh5co-portfolio" style="margin-left: 25px; margin-top: 20px">
+			<div class="row nopadding" >
+				{% if  news_obj.poster %}
+				<img src="{{ news_obj.poster.url }}" class="img-responsive" alt="{{ news_obj.title }}" style="display: block; margin-left: auto; margin-right: auto; width: 50%; border: 4px double black;">
+				<br>
+				{% endif %}
+				{% if news_obj.important %}
+				<h4>{{ news_obj.title }} &#128293;</h4>
+				{% else %}
+				<h4>{{ news_obj.title }}</h4>
+				{% endif %}
+				<small style="color: black;">{{ news_obj.date|date:"d.m.Y, H:i:s" }}</small>
+				<br>
+				<p style="margin-top: 10px;">{{ news_obj.description|safe }}</p>
+				<p style="color: black;">Источник: {{ news_obj.source }}</p>
+			</div>
+
+
+
+			{% if news_obj.newsshot_set.all %}
+			<h3 style="margin-left: 10px;">Фото:</h3>
+			{% for shot in news_obj.newsshot_set.all %}
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-xs-4 thumb">
+						<a class="thumbnail" href="#">
+							<img class="img-responsive" src="{{ shot.image.url }}" alt="{{ shot.title }}">
+						</a>
+					</div>
+			{% endfor %}
+				</div>
+			{% endif %}
+			{% if news_obj.newsfile_set.all %}
+
+
+
+			<h3 style="margin-left: 15px;">Файлы:</h3>
+			{% for nfile in news_obj.newsfile_set.all %}
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-xs-4 thumb">
+						<a href="{{nfile.file.url}}" style="font-size: 20px;">{{nfile.title}}</a>
+					</div>
+			{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+    </div>
+    <br>
+    <div class="row">
+    </div>
+{% endblock content %}

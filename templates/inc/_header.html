@@ -1,0 +1,38 @@
+<nav class="fh5co-nav" role="navigation">
+		<div class="container">
+			<div class="top-menu">
+				<div class="row">
+					<div class="col-sm-2">
+						<div id="fh5co-logo"><a href="{% url 'home' %}">Architect<span>.</span></a></div>
+					</div>
+					<div class="col-sm-10 text-right menu-1" style='line-height: 0.5;'>
+						<ul>
+							<li><a href="{% url 'home' %}" style="color:#303030;">Архитектура</a></li>
+							<li><a href="{% url 'styles' %}" style="color:#303030;">Стили</a></li>
+							<li><a href="{% url 'architectors' %}" style="color:#303030;">Известные архитекторы</a></li>
+							<li><a href="{% url 'my_works:my_works_home' %}" style="color:#303030;">Наши работы</a></li>
+							<li class="has-dropdown"><a href="#" style="color:#303030;">Еще</a>
+								<ul class="dropdown">
+									<li><a href="{% url 'contact:contact_page'%}">Контакты</a></li>
+									<li><a href="{% url 'blog:blog_home' %}">Наш блог</a></li>
+									<li><a href="{% url 'news:news_home' %}">Архитектурные новости</a></li>
+									<li><a href="{% url 'schema-swagger' %}">API сайта (Swagger)</a></li>
+									<li><a href="{% url 'schema-redoc' %}">API сайта (Redoc)</a></li>
+								</ul>
+							</li>
+							<li class="has-dropdown"><a href="#" style="color:#303030;">Поиск</a>
+								<ul class="dropdown">
+									<li>
+										<form action="{% url 'search' %}" method="get">
+											<input autocomplete="off" name="s" type="text" name="s" placeholder="Search...">
+											<input type="submit" value="Искать" style="height: 30px">
+										</form>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+</nav>

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load own_tags %}
+
+{% block title %}Стили{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">Художественные направления и архитектурные стили</h2>
+			</div>
+		</div>
+
+		<aside id="fh5co-hero">
+			<div class="flexslider">
+				<ul class="slides">
+				{% for style in styles|slice:':4' %}
+			   	<li style="background-image: url({{ style.image.url }});">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-md-6 col-xs-8 col-md-offset-1 slider-text">
+				   				<div class="slider-text-inner">
+				   					<h1><a href="{% url 'style_detail' style.url %}">{{ style.name }}</a></h1>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+				{% endfor %}
+			  	</ul>
+		  	</div>
+		</aside>
+
+		<div id="fh5co-portfolio">
+			<div class="row nopadding">
+				<div class="col-md-6 padding-right">
+					<div class="row">
+						{% for style in styles %}
+						{% if style.pk|mod_two == 1 %}
+						<div class="col-md-12 animate-box">
+							<a href="{% url 'style_detail' style.url %}" class="portfolio-grid">
+								<img src="{{ style.image.url }}" class="img-responsive" alt="{{ style.name }}" width="550">
+								<div class="desc">
+									<h3>{{ style.name }}</h3>
+									<span>{{ style.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-md-6 padding-left">
+					<div class="row">
+						{% for style in styles %}
+						{% if style.pk|mod_two == 0 %}
+						<div class="col-md-12 animate-box">
+							<a href="{% url 'style_detail' style.url %}" class="portfolio-grid">
+								<img src="{{ style.image.url }}" class="img-responsive" alt="{{ style.name }}" width="550">
+								<div class="desc">
+									<h3>{{ style.name }}</h3>
+									<span>{{ style.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- END container -->
+{% endblock %}
+
+
+
+

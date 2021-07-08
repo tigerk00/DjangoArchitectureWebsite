@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load own_tags %}
+
+{% block title %}{{ architector_obj.name }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">{{ architector_obj.name }}</h2>
+			</div>
+		</div>
+		<div id="fh5co-portfolio">
+			<div class="row">
+				<div class="col-md-4 col-md-push-8">
+					<div class="detail">
+						<div class="animate-box">
+							<h2 style="color:#F95959">{{ architector_obj.name }}</h2>
+							{% if architector_obj.date_of_death > 0 or architector_obj.date_of_death < 0 %}
+
+								{% if architector_obj.date_of_birth < 0 %}
+								<p>Дата рождения: {{ architector_obj.date_of_birth|cut:"-" }} (до н.е)</p>
+								{% else %}
+								<p>Дата рождения: {{ architector_obj.date_of_birth}}</p>
+								{% endif %}
+
+								{% if architector_obj.date_of_death < 0 %}
+								<p>Дата смерти: {{ architector_obj.date_of_death|cut:"-" }} (до н.е)</p>
+								{% else %}
+								<p>Дата смерти: {{ architector_obj.date_of_death}}</p>
+								{% endif %}
+
+
+
+							{% else %}
+
+								{% if architector_obj.date_of_birth > 0 %}
+								<p>Дата рождения: {{ architector_obj.date_of_birth }}</p>
+								{% else %}
+								<p>Дата рождения: {{ architector_obj.date_of_birth|cut:"-" }} (до н.е)</p>
+								{% endif %}
+
+							{% endif %}
+							<p>Страна: {{architector_obj.country}}</p>
+							<p>Детали: {{architector_obj.description|safe}}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-7 col-md-pull-4 image-content">
+					<div class="image-item  animate-box">
+						<img src="{{ architector_obj.image.url }}" class="img-responsive" alt="{{ architector_obj.name }}">
+						<p style="color: #F95959;">{{ architector_obj.name }}</p>
+					</div>
+					{% if architector_obj.architectors.all %}
+					<h2>Творения этого архитектора на сайте:</h2>
+					{% for arch in architector_obj.architectors.all %}
+					<div class="image-item  animate-box">
+						<img src="{{ arch.main_photo.url }}" class="img-responsive" alt="{{ arch.title }}">
+						<p><a href="{% url 'arch_detail' arch.url %}">{{ arch.title }}</a></p>
+					</div>
+					{% endfor %}
+					{% else %}
+					<h2>Пока нет творений этого архитектора на сайте :(</h2>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

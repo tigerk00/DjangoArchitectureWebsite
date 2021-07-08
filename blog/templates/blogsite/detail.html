@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ blog_obj.title|upper }}{% endblock %}
+{% block content %}
+    <script>
+        function addReview(name, id) {
+            document.getElementById("contactparent").value = id;
+            document.getElementById("contactcomment").innerText = `${name}, `
+        }
+    </script>
+    <div class="container">
+    <div id="fh5co-portfolio" style="margin-left: 25px; margin-top: 20px">
+		<div class="row nopadding" >
+			{% if  blog_obj.poster %}
+			    <img src="{{ blog_obj.poster.url }}" class="img-responsive" alt="{{ blog_obj.title }}" style="display: block; margin-left: auto; margin-right: auto; width: 50%; border: 4px double black;">
+			{% endif %}
+			<h3>{{ blog_obj.title }}</h3>
+			<small style="color: black;">{{ blog_obj.date|date:"d.m.Y, H:i:s" }}</small>
+			<br>
+			<h4 style="margin-top: 10px;">{{ blog_obj.description|safe }}</h4>
+        </div>
+    </div>
+
+
+        {% if blog_obj.blogshot_set.all %}
+			<h3 style="margin-left: 25px;">Фото:</h3>
+			{% for shot in blog_obj.blogshot_set.all %}
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-xs-4 thumb">
+						<a class="thumbnail" href="#">
+							<img class="img-responsive" src="{{ shot.image.url }}" alt="{{ shot.title }}">
+						</a>
+					</div>
+			{% endfor %}
+				</div>
+			{% endif %}
+
+			{% if blog_obj.blogfile_set.all %}
+			<h3 style="margin-left: 35px;">Файлы:</h3>
+			{% for bfile in blog_obj.blogfile_set.all %}
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-xs-4 thumb">
+						<a href="{{bfile.file.url}}" style="font-size: 20px; margin-left: 10px;">{{bfile.title}}</a>
+					</div>
+			{% endfor %}
+				</div>
+			{% endif %}
+    <br>
+    <div class="row">
+        <h3 style="text-align: center;">Оставьте свой комментарий</h3>
+        <div class="single-form-left">
+            <!-- contact form grid -->
+            <div class="contact-single">
+                <form action="{% url 'blog:add_review' blog_obj.url %}" method="post" class="mt-4"  id="formReview">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent" id="contactparent" value="">
+                    <div class="d-sm-flex">
+                        <div class="col-sm-6 form-group p-0 editContent">
+                            <label for="contactusername" class="editContent" style="margin-left: 1px;">Имя *</label>
+                            <input type="text" class="form-control border" name="name" id="contactusername" required="" style="width:100%; height:50px; left:20px;">
+                        </div>
+                        <div class="col-sm-6 form-group ml-sm-3 editContent">
+                            <label for="contactemail" class="editContent" style="margin-left: 1px;">Email * </label>
+                            <input type="email" class="form-control border" name="email" id="contactemail" required="">
+                        </div>
+                    </div>
+                    <div class="form-group editContent">
+                        <label for="contactcomment" class="editContent" style="margin-left: 45px;">Ваш комментарий *</label>
+                        <textarea class="form-control border" rows="5" name="text" id="contactcomment" required="" style="margin: 0px 17px 0px 45px; width: 1108px; height: 115px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block " style="margin: 0px 17px 10px 45px; border-radius: 8px; width:1108px; background-color: #F95959; border: #F95959;">Отправить</button>
+                    {{ form.captcha }}
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h3 style="margin-bottom:20px; padding-left:40px;">Cекция коментариев:</h3>
+        {% for review in blog_obj.get_review %}
+        {% if review.allowed == True %}
+            <div class="media py-5" style="padding-left:40px;">
+                <div class="media-body mt-4">
+                    <h5 class="mt-0 editContent">
+                        Пользователь: {{ review.name }}
+                    </h5>
+                    <p class="mt-2 editContent">
+                        Коментарий: {{ review.text }}
+                    </p>
+                    <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')">Ответить</a>
+                    {% for rev in review.reviews_set.all %}
+                    {% if rev.allowed == True %}
+                    <div class="media mt-5 editContent" style="padding-left:30px;">
+                        <div class="media-body">
+                            <h5 class="mt-0 editContent">Користувач: {{ rev.name }}</h5>
+                            <p class="mt-2 editContent">Відповідь: {{ rev.text }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}

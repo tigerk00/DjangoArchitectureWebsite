@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% load own_tags %}
+
+{% block title %}Поиск: {{s|slice:'2:'}}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">Результаты поиска, которые содержат ваш запрос ("{{s|slice:'2:'}}"):</h2>
+			</div>
+		</div>
+		<div id="fh5co-portfolio">
+			<!--RESULTS OF SEARCH -->
+			{% if posts.architectures or posts.styles or posts.architectors %}
+			<div class="row nopadding">
+				<div class="col-md-6 padding-right">
+					<div class="row">
+						{% for post in posts.architectures %}
+						{% if forloop.counter0|mod_two == 0 %}
+						<div class="col-md-12">
+							<a href="{% url 'arch_detail' post.url  %}" class="portfolio-grid">
+								<img src="{{ post.main_photo.url }}" class="img-responsive" alt="{{ post.title }}" width="550">
+								<div class="desc">
+									<h3>{{ post.title }}</h3>
+									<span>{{ post.country }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+
+						{% for post in posts.styles %}
+						{% if forloop.counter0|mod_two == 0 %}
+						<div class="col-md-12">
+							<a href="{% url 'style_detail' post.url %}" class="portfolio-grid">
+								<img src="{{ post.image.url }}" class="img-responsive" alt="{{ post.name }}" width="550">
+								<div class="desc">
+									<h3>{{ post.name }}</h3>
+									<span>{{ post.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+
+						{% for post in posts.architectors %}
+						{% if forloop.counter0|mod_two == 0 %}
+						<div class="col-md-12">
+							<a href="{% url 'architector_detail' post.url %}" class="portfolio-grid">
+								<img src="{{ post.image.url }}" class="img-responsive" alt="{{ post.name }}" width="550">
+								<div class="desc">
+									<h3>{{ post.name|truncatewords:5 }}</h3>
+									<span>{{ post.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="col-md-6 padding-left">
+					<div class="row">
+						{% for post in posts.architectures%}
+						{% if forloop.counter0|mod_two == 1 %}
+						<div class="col-md-12">
+							<a href="{% url 'arch_detail' post.url  %}" class="portfolio-grid">
+								<img src="{{ post.main_photo.url }}" class="img-responsive" alt="{{ post.title }}" width="550">
+								<div class="desc">
+									<h3>{{ post.title }}</h3>
+									<span>{{ post.country }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+
+						{% for post in posts.styles %}
+						{% if forloop.counter0|mod_two == 1 %}
+						<div class="col-md-12">
+							<a href="{% url 'style_detail' post.url %}" class="portfolio-grid">
+								<img src="{{ post.image.url }}" class="img-responsive" alt="{{ post.name }}" width="550">
+								<div class="desc">
+									<h3>{{ post.name }}</h3>
+									<span>{{ post.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+
+						{% for post in posts.architectors %}
+						{% if forloop.counter0|mod_two == 1 %}
+						<div class="col-md-12">
+							<a href="{% url 'architector_detail' post.url %}" class="portfolio-grid">
+								<img src="{{ post.image.url }}" class="img-responsive" alt="{{ post.name }}" width="550">
+								<div class="desc">
+									<h3>{{ post.name|truncatewords:5 }}</h3>
+									<span>{{ post.description|truncatewords:5|striptags|safe }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+				</div>
+			</div>
+			{% else  %}
+			<h3 style="text-align: center;">Извините, за вашим запросом не было ничего найдено. Проверьте, возможно где-то ошибка.</h3>
+			{% endif %}
+			<!--RESULTS OF SEARCH -->
+		</div>
+	</div><!-- END container -->
+{% endblock %}
+
+
+
+

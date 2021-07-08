@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Page{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">Свяжитесь с нами</h2>
+			</div>
+		</div>
+		<div id="fh5co-contact">
+			<div class="row">
+				<div class="col-md-4 animate-box">
+					<h3>Contact Information</h3>
+					<ul class="contact-info">
+						<li><i class="icon-location4"></i>{{ contact_info.address }}</li>
+						<li><i class="icon-phone3"></i>{{ contact_info.phone_number }}</li>
+						<li><i class="icon-mail5"></i><a href="#">{{ contact_info.email_address }}</a></li>
+						{% if  contact_info.website %}
+						<li><i class="icon-globe2"></i><a href="#">{{contact_info.website}}</a></li>
+						{% endif %}
+						{% if  contact_info.instagram_link %}
+						<li><i class="icon-instagram"></i><a href="#">{{contact_info.instagram_link}}</a></li>
+						{% endif %}
+						{% if  contact_info.facebook_link %}
+						<li><i class="icon-facebook2"></i><a href="#">{{contact_info.facebook_link}}</a></li>
+						{% endif %}
+						{% if  contact_info.twitter_link %}
+						<li><i class="icon-twitter2"></i><a href="#">{{contact_info.twitter_link}}</a></li>
+						{% endif %}
+						{% if  contact_info.youtube_link %}
+						<li><i class="icon-youtube"></i><a href="#">{{contact_info.youtube_link}}</a></li>
+						{% endif %}
+					</ul>
+					{% if map %}
+					{{ map }}
+					{% endif %}
+				</div>
+				<div class="col-md-7 col-md-offset-1 animate-box">
+					<form class="was_validated" method="post">
+						{% csrf_token %}
+						<div class="form-wrap">
+							<h4 style="text-align: center;">Оставьте нам сообщение, и мы обязательно ответим Вам!</h4>
+							<div class="row">
+								<div class="col-md-8">
+									<div class="form-group">
+										<label for="NameInput">Ваше имя:</label>
+										<input id="NameInput" name="name" type="text" class="form-control" placeholder="Name" required>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="EmailInput">Ваш E-mail:</label>
+										<input id="EmailInput" name="email" type="text" class="form-control" placeholder="Email" required>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="TextInput">Текст сообщения:</label>
+										<textarea name="message" class="form-control" id="TextInput" cols="15" rows="10" placeholder="Message" required></textarea>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<input type="submit" value="Send Message" class="btn btn-primary btn-modify">
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div><!-- END container -->
+
+{% endblock %}
+

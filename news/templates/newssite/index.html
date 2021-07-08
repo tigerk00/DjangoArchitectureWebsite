@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">Новости мира архитектуры</h2>
+			</div>
+		</div>
+		<div id="fh5co-portfolio">
+			<div class="row nopadding">
+					<div class="row">
+						{% for n in news %}
+						<ul class="animate-box" style="margin-left: 25px; margin-top: 20px">
+							<li>
+							<a href="{% url 'news:news_detail' n.url %}" >
+								{% if n.important %}
+								<h4>{{ n.title }} &#128293;</h4>
+								{% else %}
+								<h4>{{ n.title }}</h4>
+								{% endif %}
+								<small style="color: black;">{{ n.date|date:"d.m.Y, H:i:s" }}</small>
+							</a>
+							</li>
+						</ul>
+					{% endfor %}
+					</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

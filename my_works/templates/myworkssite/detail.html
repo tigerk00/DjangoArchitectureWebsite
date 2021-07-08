@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ my_obj.title }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">{{ my_obj.title }}</h2>
+			</div>
+		</div>
+		<div id="fh5co-portfolio">
+			<div class="row">
+				<div class="col-md-4 col-md-push-8">
+					<div class="detail">
+					<div class="detail">
+						<div class="animate-box">
+							<h2 style="color:#F95959">{{ my_obj.title }}</h2>
+							<p>{{ my_obj.description|safe }}</p>
+							{% if  my_obj.workfile_set %}
+								<p style="color: black;">Прикріплені файли:</p>
+								{% for w_file in my_obj.workfile_set.all %}
+								<a href="{{ w_file.file.url }}">{{ w_file.title }}</a>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7 col-md-pull-4 image-content">
+				<div class="image-item  animate-box">
+					<img src="{{ my_obj.main_photo.url }}" class="img-responsive" alt="{{ my_obj.title }}">
+					<p style="color:#F95959">{{ my_obj.title }}</p>
+				</div>
+				{% for shot in my_obj.workshot_set.all %}
+				<div class="image-item  animate-box">
+					<img src="{{ shot.image.url }}" class="img-responsive" alt="">
+					<p style="color:#F95959">{{ shot.description }}</p>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

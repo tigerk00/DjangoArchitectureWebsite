@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load own_tags %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="fh5co-intro">
+			<div class="row animate-box">
+				<h2 style="text-align: center;">Самые прекрасные шедевры архитектурного искусства</h2>
+			</div>
+		</div>
+
+		<aside id="fh5co-hero">
+			<div class="flexslider">
+				<ul class="slides">
+				{% for post in posts|slice:':4' %}
+			   	<li style="background-image: url({{ post.main_photo.url }});">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+				   			<div class="col-md-6 col-xs-8 col-md-offset-1 slider-text">
+				   				<div class="slider-text-inner">
+				   					<h1><a href="{% url 'arch_detail' post.url %}">{{ post.title }}</a></h1>
+				   				</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+				{% endfor %}
+			  	</ul>
+		  	</div>
+		</aside>
+		<div id="fh5co-portfolio">
+			<div class="row nopadding">
+				<div class="col-md-6 padding-right">
+					<div class="row">
+						{% for post in posts %}
+						{% if post.pk|mod_two == 1 %}
+						<div class="col-md-12 animate-box">
+							<a href="{% url 'arch_detail' post.url  %}" class="portfolio-grid">
+								<img src="{{ post.main_photo.url }}" class="img-responsive" alt="{{ post.title }}" width="550">
+								<div class="desc">
+									<h3>{{ post.title }}</h3>
+									<span>{{ post.country }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="col-md-6 padding-left">
+					<div class="row">
+						{% for post in posts %}
+						{% if post.pk|mod_two == 0 %}
+						<div class="col-md-12 animate-box">
+							<a href="{% url 'arch_detail' post.url  %}" class="portfolio-grid">
+								<img src="{{ post.main_photo.url }}" class="img-responsive" alt="{{ post.title }}" width="550">
+								<div class="desc">
+									<h3>{{ post.title }}</h3>
+									<span>{{ post.country }}</span>
+								</div>
+							</a>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- END container -->
+{% endblock %}
+
+
+<!--element.style {-->
+<!--    background-image: url(/media/architecture/450px-Queens_House_2006.jpg);-->
+<!--    width: 100%;-->
+<!--    float: left;-->
+<!--    margin-right: -100%;-->
+<!--    position: relative;-->
+<!--    opacity: 1;-->
+<!--    display: block;-->
+<!--    z-index: 2;-->
+<!--}-->
+
+
